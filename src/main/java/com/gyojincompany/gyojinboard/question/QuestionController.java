@@ -5,12 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import jakarta.validation.Valid;
 
 @RequestMapping("/question") //prefix(접두사)
 @Controller
@@ -48,21 +51,33 @@ public class QuestionController {
 	}
 	
 	@GetMapping(value = "/create") //질문 등록 폼만 매핑해주는 메서드->GET
-	public String questionCreate() {
+	public String questionCreate(QuestionForm questionForm) {
 		return "question_form"; //질문 등록하는 폼 페이지 이름
 	}
 	
+//	@PostMapping(value = "/create") //질문 내용을 DB에 저장하는 메서드->POST
+//	public String questionCreate(@RequestParam(value = "subject") String subject, @RequestParam(value = "content") String content) {
+//		//@RequestParam("subject") String subject-> String subject = request.getParameter("subject")
+//		//@RequestParam("content") String content-> String content = request.getParameter("content")
+//		
+//		questionService.create(subject, content); //질문 DB에 등록하기
+//		
+//		return "redirect:/question/list"; //질문 리스트로 이동->반드시 redirect
+//	}
+	
 	@PostMapping(value = "/create") //질문 내용을 DB에 저장하는 메서드->POST
-	public String questionCreate(@RequestParam(value = "subject") String subject, @RequestParam(value = "content") String content) {
+	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
 		//@RequestParam("subject") String subject-> String subject = request.getParameter("subject")
 		//@RequestParam("content") String content-> String content = request.getParameter("content")
 		
-		questionService.create(subject, content); //질문 DB에 등록하기
+		if(bindingResult.hasErrors()) { //참이면 -> 유효성 체크에서 에러 발생
+			return "question_form"; //에러 발생 시 다시 질문 등록 폼으로 이동
+		}
+		
+		questionService.create(questionForm.getSubject(), questionForm.getContent()); //질문 DB에 등록하기
 		
 		return "redirect:/question/list"; //질문 리스트로 이동->반드시 redirect
 	}
-	
-	
 	
 	
 }
