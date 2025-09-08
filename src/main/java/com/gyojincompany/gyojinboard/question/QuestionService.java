@@ -1,5 +1,6 @@
 package com.gyojincompany.gyojinboard.question;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class QuestionService {
 		return questionRepository.findAll();
 	}
 	
-	public Question getQuestion(Integer id) {
+	public Question getQuestion(Integer id) { //기본키인 질문글 번호로 질문 1개 가져오기
 		Optional<Question> qOptional = questionRepository.findById(id);
 		
 		if(qOptional.isPresent()) {
@@ -32,5 +33,15 @@ public class QuestionService {
 		}
 		
 	}
+	
+	public void create(String subject, String content) {
+		Question question = new Question();
+		question.setSubject(subject);
+		question.setContent(content);
+		question.setCreatedate(LocalDateTime.now());
+		questionRepository.save(question);
+	}
+	
+	
 	
 }

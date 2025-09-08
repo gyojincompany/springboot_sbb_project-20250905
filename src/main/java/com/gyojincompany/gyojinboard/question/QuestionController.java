@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/question") //prefix(접두사)
@@ -43,6 +45,21 @@ public class QuestionController {
 		Question question = questionService.getQuestion(id);
 		model.addAttribute("question", question);
 		return "question_detail"; //타임리프 html의 이름
+	}
+	
+	@GetMapping(value = "/create") //질문 등록 폼만 매핑해주는 메서드->GET
+	public String questionCreate() {
+		return "question_form"; //질문 등록하는 폼 페이지 이름
+	}
+	
+	@PostMapping(value = "/create") //질문 내용을 DB에 저장하는 메서드->POST
+	public String questionCreate(@RequestParam(value = "subject") String subject, @RequestParam(value = "content") String content) {
+		//@RequestParam("subject") String subject-> String subject = request.getParameter("subject")
+		//@RequestParam("content") String content-> String content = request.getParameter("content")
+		
+		questionService.create(subject, content); //질문 DB에 등록하기
+		
+		return "redirect:/question/list"; //질문 리스트로 이동->반드시 redirect
 	}
 	
 	
