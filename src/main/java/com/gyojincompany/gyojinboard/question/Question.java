@@ -1,7 +1,9 @@
-package com.gyojincompany.gyojinboard.entity;
+package com.gyojincompany.gyojinboard.question;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.gyojincompany.gyojinboard.answer.Answer;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

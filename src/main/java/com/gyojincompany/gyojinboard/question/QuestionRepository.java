@@ -1,8 +1,7 @@
-package com.gyojincompany.gyojinboard.repository;
+package com.gyojincompany.gyojinboard.question;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gyojincompany.gyojinboard.entity.Question;
 import java.util.List;
 
 

@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gyojincompany.gyojinboard.entity.Answer;
-import com.gyojincompany.gyojinboard.entity.Question;
-import com.gyojincompany.gyojinboard.repository.AnswerRepository;
-import com.gyojincompany.gyojinboard.repository.QuestionRepository;
+import com.gyojincompany.gyojinboard.answer.Answer;
+import com.gyojincompany.gyojinboard.answer.AnswerRepository;
+import com.gyojincompany.gyojinboard.question.Question;
+import com.gyojincompany.gyojinboard.question.QuestionRepository;
 
 @SpringBootTest
 public class Test02 {
