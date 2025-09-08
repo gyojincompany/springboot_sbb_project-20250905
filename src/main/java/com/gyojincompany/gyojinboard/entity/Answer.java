@@ -2,8 +2,6 @@ package com.gyojincompany.gyojinboard.entity;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.CreatedDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,14 +36,11 @@ public class Answer {
 	@Column(length = 500)
 	private String content; //답변 게시판 내용	
 	
-	private LocalDateTime createdate;
+	private LocalDateTime createdate; //게시판 답변 등록일시
 	
 	//N:1 관계 -> 답변들:질문 -> @ManyToOne
 	@ManyToOne
 	private Question question;
-	
-	
-	
 	
 
 }

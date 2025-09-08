@@ -3,8 +3,6 @@ package com.gyojincompany.gyojinboard.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.data.annotation.CreatedDate;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,7 +41,7 @@ public class Question {
 	@Column(length = 500)
 	private String content; //질문게시판의 내용	
 	
-	private LocalDateTime createdate;
+	private LocalDateTime createdate; //질문게시판 글 등록일시
 	
 	//1:N 관계->질문:답변들->@OneToMany
 	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)

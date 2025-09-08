@@ -70,6 +70,22 @@ public class Test01 {
 		
 	}
 	
+	@Test
+	@DisplayName("제목과 내용으로 조회한 글의 번호가 2번인지 테스트")
+	public void testJpa5() {
+		Question question = questionRepository.findBySubjectAndContent("sbb가 무엇인가요?","sbb에 대해 알고 싶습니다.");
+		 //select * from question where subject='sbb가 무엇인가요?' and content='sbb에 대해 알고 싶습니다.'
+		assertEquals(2, question.getId());
+		
+	}
 	
+	@Test
+	@DisplayName("제목에 특정 단어가 들어간 레코드를 조회한 글 테스트")
+	public void testJpa6() {
+		List<Question> questionList = questionRepository.findBySubjectLike("sbb%");
+		Question question = questionList.get(0); //첫번째 레코드 가져오기
+		assertEquals("sbb가 무엇인가요?", question.getSubject());
+		
+	}
 
 }
