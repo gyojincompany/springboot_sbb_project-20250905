@@ -1,9 +1,13 @@
 package com.gyojincompany.gyojinboard.user;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.gyojincompany.gyojinboard.DataNotFoundException;
 
 @Service
 public class UserService {
@@ -25,5 +29,18 @@ public class UserService {
 		userRepository.save(user);
 		
 		return user;
+	}
+	
+	//유저 아이디로 엔티티 가져오기
+	public SiteUser getUser(String username) {
+		Optional<SiteUser> _siteUSer = userRepository.findByUsername(username); //아이디로 엔티티 가져오기 메서드
+		
+		if(_siteUSer.isPresent()) {
+			SiteUser siteUser = _siteUSer.get();
+			return siteUser;
+		} else {
+			throw new DataNotFoundException("해당 유저는 존재하지 않는 유저입니다.");
+		}
+		
 	}
 }

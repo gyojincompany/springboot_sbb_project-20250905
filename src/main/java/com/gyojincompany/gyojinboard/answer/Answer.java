@@ -3,6 +3,7 @@ package com.gyojincompany.gyojinboard.answer;
 import java.time.LocalDateTime;
 
 import com.gyojincompany.gyojinboard.question.Question;
+import com.gyojincompany.gyojinboard.user.SiteUser;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,6 +44,10 @@ public class Answer {
 	//N:1 관계 -> 답변들:질문 -> @ManyToOne
 	@ManyToOne
 	private Question question;
+	
+	//N:1 관계->답변:작성자
+	@ManyToOne
+	private SiteUser author; //글쓴이(1명)
 	
 
 }
