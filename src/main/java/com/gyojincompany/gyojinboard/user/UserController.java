@@ -1,6 +1,7 @@
 package com.gyojincompany.gyojinboard.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,10 +34,22 @@ public class UserController {
 			bindingResult.rejectValue("password2", "passwordInCorrect", "비밀번호 확인이 일치하지 않습니다.");
 			return "signup_form";			
 		}
+		try {
+			userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1());
+		} catch (DataIntegrityViolationException e) { //중복된 데이터에 대한 예외처리
+			e.printStackTrace();
+			//이미 등록된 사용자 아이디의 경우 발생하는 에러 추가
+			bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
+			return "signup_form";
+		} catch (Exception e) { //기타 나머지 예외 처리
+			e.printStackTrace();
+			bindingResult.reject("signupFailed", "회원 가입 실패입니다.");
+			return "signup_form";
+		}
 		
-		userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1());
 		
-		return "rediect:/"; //첫화면으로 이동
+		
+		return "redirect:/question/list"; //첫화면으로 이동
 	}
 
 }
