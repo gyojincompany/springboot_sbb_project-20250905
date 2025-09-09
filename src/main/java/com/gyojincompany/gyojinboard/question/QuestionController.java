@@ -3,6 +3,7 @@ package com.gyojincompany.gyojinboard.question;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,13 +33,27 @@ public class QuestionController {
 		return "redirect:/question/list";
 	}
 	
-	@GetMapping(value = "/list")
-	//@ResponseBody
+	/* 페이징용 list
+	@GetMapping(value = "/list")	
+	public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+		
+		//List<Question> questionList = questionRepository.findAll(); //모든 질문글 불러오기
+		// List<Question> questionList = questionService.getList();
+		Page<Question> paging = questionService.getList(page);
+		//게시글 10개씩 자른 리스트->페이지당 10개->2페이지에 해당하는 글 10개 
+		model.addAttribute("paging", paging);
+		
+		return "question_list";
+	}
+	*/
+	@GetMapping(value = "/list")	
 	public String list(Model model) {
 		
 		//List<Question> questionList = questionRepository.findAll(); //모든 질문글 불러오기
-		List<Question> questionList = questionService.getList();
-		model.addAttribute("questionList", questionList);
+		 List<Question> questionList = questionService.getList();
+		//Page<Question> paging = questionService.getList(page);
+		//게시글 10개씩 자른 리스트->페이지당 10개->2페이지에 해당하는 글 10개 
+		model.addAttribute("paging", questionList);
 		
 		return "question_list";
 	}	
