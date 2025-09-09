@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gyojincompany.gyojinboard.answer.AnswerForm;
+
 import jakarta.validation.Valid;
 
 @RequestMapping("/question") //prefix(접두사)
@@ -42,7 +44,7 @@ public class QuestionController {
 	}	
 	
 	@GetMapping(value = "/detail/{id}") //파라미터이름 없이 값만 넘어왔을때 처리
-	public String detail(Model model, @PathVariable("id") Integer id) {
+	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
 		
 		//service에 3을 넣어서 호출
 		Question question = questionService.getQuestion(id);
@@ -66,9 +68,7 @@ public class QuestionController {
 //	}
 	
 	@PostMapping(value = "/create") //질문 내용을 DB에 저장하는 메서드->POST
-	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
-		//@RequestParam("subject") String subject-> String subject = request.getParameter("subject")
-		//@RequestParam("content") String content-> String content = request.getParameter("content")
+	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {		
 		
 		if(bindingResult.hasErrors()) { //참이면 -> 유효성 체크에서 에러 발생
 			return "question_form"; //에러 발생 시 다시 질문 등록 폼으로 이동
