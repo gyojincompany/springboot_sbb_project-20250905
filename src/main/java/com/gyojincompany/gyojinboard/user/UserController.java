@@ -51,5 +51,10 @@ public class UserController {
 		
 		return "redirect:/question/list"; //첫화면으로 이동
 	}
+	
+	@GetMapping(value = "/login")
+	public String login() {
+		return "login_form";
+	}
 
 }
