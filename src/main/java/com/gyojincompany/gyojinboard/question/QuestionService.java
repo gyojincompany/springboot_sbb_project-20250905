@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.gyojincompany.gyojinboard.DataNotFoundException;
+import com.gyojincompany.gyojinboard.user.SiteUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,11 +41,12 @@ public class QuestionService {
 		
 	}
 	
-	public void create(String subject, String content) {
+	public void create(String subject, String content, SiteUser user) {
 		Question question = new Question();
 		question.setSubject(subject);
 		question.setContent(content);
 		question.setCreatedate(LocalDateTime.now());
+		question.setAuthor(user);//글쓴이 엔티티 추가
 		questionRepository.save(question);
 	}
 	

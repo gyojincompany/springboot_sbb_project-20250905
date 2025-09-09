@@ -1,5 +1,6 @@
 package com.gyojincompany.gyojinboard.question;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gyojincompany.gyojinboard.answer.AnswerForm;
+import com.gyojincompany.gyojinboard.user.SiteUser;
+import com.gyojincompany.gyojinboard.user.UserService;
 
 import jakarta.validation.Valid;
 
@@ -27,6 +30,9 @@ public class QuestionController {
 	
 	@Autowired
 	private QuestionService questionService;
+	
+	@Autowired
+	private UserService userService;
 	
 	
 	
@@ -80,13 +86,16 @@ public class QuestionController {
 //	}
 	
 	@PostMapping(value = "/create") //질문 내용을 DB에 저장하는 메서드->POST
-	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {		
+	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {		
 		
 		if(bindingResult.hasErrors()) { //참이면 -> 유효성 체크에서 에러 발생
 			return "question_form"; //에러 발생 시 다시 질문 등록 폼으로 이동
 		}
 		
-		questionService.create(questionForm.getSubject(), questionForm.getContent()); //질문 DB에 등록하기
+		SiteUser siteUser = userService.getUser(principal.getName()); 
+		//현재 로그인된 유저의 username 으로 SiteUser 엔티티 반환 받기 
+		
+		questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser); //질문 DB에 등록하기
 		
 		return "redirect:/question/list"; //질문 리스트로 이동->반드시 redirect
 	}
