@@ -75,5 +75,9 @@ public class QuestionService {
 		questionRepository.save(question); //질문 글 수정
 	}
 	
+	public void delete(Question question) { //글 삭제하기
+		questionRepository.delete(question);
+	}
+	
 	
 }

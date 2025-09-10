@@ -155,4 +155,20 @@ public class QuestionController {
 		return String.format("redirect:/question/detail/%s",id);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping(value = "/delete/{id}")
+	public String questionDelete(@PathVariable("id") Integer id, Principal principal) {
+		
+		Question question = questionService.getQuestion(id);
+		
+		//글쓴 유저와 로그인한 유저의 동일 여부를 다시한번 검증->수정 권한 검증
+		if(!question.getAuthor().getUsername().equals(principal.getName())) { //참->수정 권한 없음
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
+		}
+		
+		questionService.delete(question); //글 삭제
+		
+		return "redirect:/question/list";
+	}
+	
 }
