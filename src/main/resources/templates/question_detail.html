@@ -54,6 +54,12 @@
 						class="btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
 						th:if="${answer.author != null and answer.author.username == #authentication.getPrincipal().getUsername()}"
 						th:text="수정">수정 버튼 이름 표시</a>
+						<!-- 답변 삭제 버튼 -->						
+						<a href="javascript:void(0);" 
+						th:data-uri="@{|/answer/delete/${answer.id}|}" 
+						class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+						th:if="${answer.author != null and answer.author.username == #authentication.getPrincipal().getUsername()}"
+						th:text="삭제">삭제 버튼 이름 표시</a>
 				</div>	
 			</div>			
 		</div>
