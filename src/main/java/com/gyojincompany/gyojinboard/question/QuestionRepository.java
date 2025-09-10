@@ -3,6 +3,8 @@ package com.gyojincompany.gyojinboard.question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -18,6 +20,14 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	
 	//페이징 관련
 	//TODO:public Page<Question> findAll(Pageable pageable);
-	
+	@Query(
+		      value = "SELECT * FROM ( " +
+		              " SELECT q.*, ROWNUM rnum FROM ( " +
+		              "   SELECT * FROM question ORDER BY createdate DESC " +
+		              " ) q WHERE ROWNUM <= :endRow " +
+		              ") WHERE rnum > :startRow",
+		      nativeQuery = true)
+    List<Question> findQuestionsWithPaging(@Param("startRow") int startRow,
+                                           @Param("endRow") int endRow);	
 	
 }

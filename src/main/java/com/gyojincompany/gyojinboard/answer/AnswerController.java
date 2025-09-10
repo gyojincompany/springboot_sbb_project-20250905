@@ -38,7 +38,9 @@ public class AnswerController {
 		Question question = questionService.getQuestion(id);
 		
 		//principal.getName();//로그인한 유저의 아이디 얻기		
-		SiteUser siteUser = userService.getUser(principal.getName());		
+		SiteUser siteUser = userService.getUser(principal.getName());
+		//principal.getName() -> (String)session.getAttribute("sessionId");
+		//->세션에 올라가 있는 로그인한 유저의 아이디 가져오기 
 		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("question", question);

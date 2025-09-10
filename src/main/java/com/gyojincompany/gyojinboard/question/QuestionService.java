@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,23 @@ public class QuestionService {
 		question.setCreatedate(LocalDateTime.now());
 		question.setAuthor(user);//글쓴이 엔티티 추가
 		questionRepository.save(question);
+	}
+	
+	//페이징 테스트
+	public Page<Question> getPageQuestions(int page) {
+		int size = 10; //1페이지당 10개씩 글 출력
+		
+		int startRow = page * size;
+		int endRow = startRow + size;
+		
+		List<Question> pageQuestionList = questionRepository.findQuestionsWithPaging(startRow, endRow);
+		
+		long totalQuestion = questionRepository.count(); //모든 글 갯수 가져오기
+		
+		Page<Question> pagingList = new PageImpl<>(pageQuestionList, PageRequest.of(page, size), totalQuestion);
+		
+		return pagingList;
+		
 	}
 	
 	

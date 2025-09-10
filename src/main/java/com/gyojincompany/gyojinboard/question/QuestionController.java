@@ -71,7 +71,7 @@ public class QuestionController {
 		return "question_detail"; //타임리프 html의 이름
 	}
 	
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()") //로그인 성공->인증받지 않은 유저는 해당 메서드 호출 불가
 	@GetMapping(value = "/create") //질문 등록 폼만 매핑해주는 메서드->GET
 	public String questionCreate(QuestionForm questionForm) {
 		return "question_form"; //질문 등록하는 폼 페이지 이름
@@ -102,5 +102,18 @@ public class QuestionController {
 		return "redirect:/question/list"; //질문 리스트로 이동->반드시 redirect
 	}
 	
+	@GetMapping(value = "/list2")	
+	public String list2(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+		
+		int pageSize = 10;
+		
+		//List<Question> questionList = questionRepository.findAll(); //모든 질문글 불러오기
+		 //List<Question> questionList = questionService.getList();
+		Page<Question> paging = questionService.getPageQuestions(page);
+		//게시글 10개씩 자른 리스트->페이지당 10개->2페이지에 해당하는 글 10개 
+		model.addAttribute("paging", paging);
+		
+		return "question_list";
+	}	
 	
 }

@@ -52,7 +52,7 @@ public class UserController {
 		return "redirect:/question/list"; //첫화면으로 이동
 	}
 	
-	@GetMapping(value = "/login")
+	@GetMapping(value = "/login") //로그인 폼만 매핑
 	public String login() {
 		return "login_form";
 	}
