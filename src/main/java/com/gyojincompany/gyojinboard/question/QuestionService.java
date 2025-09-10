@@ -38,8 +38,7 @@ public class QuestionService {
 			return qOptional.get(); //question 반환
 		} else {
 			throw new DataNotFoundException("question not found");
-		}
-		
+		}		
 	}
 	
 	public void create(String subject, String content, SiteUser user) {

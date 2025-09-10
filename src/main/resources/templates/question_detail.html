@@ -16,12 +16,12 @@
 					</div>
 				</div>
 				<div class="my-3">
-				<!-- 수정 버튼 -->
+				<!-- 질문 수정 버튼 -->
 					<a th:href="@{|/question/modify/${question.id}|}" 
 					class="btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
 					th:if="${question.author != null and question.author.username == #authentication.getPrincipal().getUsername()}"
 					th:text="수정">수정 버튼 이름 표시</a>
-				<!-- 삭제 버튼 -->
+				<!-- 질문 삭제 버튼 -->
 					<a href="javascript:void(0);" 
 					th:data-uri="@{|/question/delete/${question.id}|}" 
 					class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
@@ -46,8 +46,15 @@
 							<span th:if="answer.author != null" th:text="${answer.author.username}"></span>
 						</div>						
 						<div th:text="${#temporals.format(answer.createdate, 'yyyy-MM-dd HH:mm')}">질문등록일</div>
-					</div>
+					</div>									
 				</div>
+				<div class="my-3">
+						<!-- 답변 수정 버튼 -->
+						<a th:href="@{|/answer/modify/${answer.id}|}" 
+						class="btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+						th:if="${answer.author != null and answer.author.username == #authentication.getPrincipal().getUsername()}"
+						th:text="수정">수정 버튼 이름 표시</a>
+				</div>	
 			</div>			
 		</div>
 		
