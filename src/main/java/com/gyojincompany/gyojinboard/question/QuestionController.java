@@ -88,7 +88,7 @@ public class QuestionController {
 //		
 //		return "redirect:/question/list"; //질문 리스트로 이동->반드시 redirect
 //	}
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()") //form->action으로 넘어오지 않으면->권한 인증이 안됨
 	@PostMapping(value = "/create") //질문 내용을 DB에 저장하는 메서드->POST
 	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {		
 		
@@ -117,7 +117,7 @@ public class QuestionController {
 		
 		return "question_list";
 	}	
-	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value = "/modify/{id}")
 	public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id, Principal principal) {
 		Question question = questionService.getQuestion(id); //id에 해당하는 엔티티가 반환->수정하려는 글의 엔티티
@@ -132,6 +132,27 @@ public class QuestionController {
 		questionForm.setContent(question.getContent());
 		
 		return "question_form";
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(value = "/modify/{id}")
+	public String questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult, 
+			Principal principal, @PathVariable("id") Integer id) {
+		
+		if(bindingResult.hasErrors()) {
+			return "question_form";
+		}
+		
+		Question question = questionService.getQuestion(id);
+		
+		//글쓴 유저와 로그인한 유저의 동일 여부를 다시한번 검증->수정 권한 검증
+		if(!question.getAuthor().getUsername().equals(principal.getName())) { //참->수정 권한 없음
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
+		}
+		
+		questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
+		
+		return String.format("redirect:/question/detail/%s",id);
 	}
 	
 }
