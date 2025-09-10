@@ -171,4 +171,18 @@ public class QuestionController {
 		return "redirect:/question/list";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping(value = "/vote/{id}")
+	public String questionVote(@PathVariable("id") Integer id, Principal principal) {
+		
+		Question question = questionService.getQuestion(id); //유저가 추천한 질문글의 엔티티 조회
+		
+		SiteUser siteUser = userService.getUser(principal.getName());
+		//로그인한 유저의 아이디로 유저 엔티티 조회하기
+		
+		questionService.vote(question, siteUser);
+		
+		return String.format("redirect:/question/detail/%s", id);
+	}
+	
 }

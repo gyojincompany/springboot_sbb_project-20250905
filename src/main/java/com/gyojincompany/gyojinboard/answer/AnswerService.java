@@ -44,4 +44,11 @@ public class AnswerService {
 	public void delete(Answer answer) { //답변 삭제하기
 		answerRepository.delete(answer);
 	}
+	
+	public void vote(Answer answer, SiteUser siteUser) { //->update문으로 만들어줘야 함
+		answer.getVoter().add(siteUser);
+		//answer->추천을 받은 글의 번호로 조회한 답변 엔티티
+		//answer의 멤버인 voter를 get해서 voter에 추천을 누른 유저의 엔티티를 추가해 줌
+		answerRepository.save(answer); //추천한 유저수가 변경된 답변 엔티티를 다시 save해서 갱신
+	}
 }

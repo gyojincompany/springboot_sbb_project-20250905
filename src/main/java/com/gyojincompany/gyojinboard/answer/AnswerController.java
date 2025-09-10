@@ -101,5 +101,20 @@ public class AnswerController {
 		
 		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping(value = "/vote/{id}")
+	public String answerVote(@PathVariable("id") Integer id, Principal principal) {
+		
+		Answer answer = answerService.getAnswer(id);
+		
+		SiteUser siteUser = userService.getUser(principal.getName());
+		//로그인한 유저의 아이디로 유저 엔티티 조회하기
+		
+		answerService.vote(answer, siteUser);
+		
+		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+		//해당 답변이 달린 원글(질문글)로 이동
+	}
 
 }
