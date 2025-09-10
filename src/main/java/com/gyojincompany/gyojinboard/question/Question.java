@@ -56,5 +56,7 @@ public class Question {
 	@ManyToOne
 	private SiteUser author; //글쓴이(1명)
 	
+	private LocalDateTime modifydate; //질문 글 수정 일시
+	
 
 }
