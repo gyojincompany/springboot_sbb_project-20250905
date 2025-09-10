@@ -2,6 +2,7 @@ package com.gyojincompany.gyojinboard.question;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import com.gyojincompany.gyojinboard.answer.Answer;
 import com.gyojincompany.gyojinboard.user.SiteUser;
@@ -12,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
@@ -57,6 +59,11 @@ public class Question {
 	private SiteUser author; //글쓴이(1명)
 	
 	private LocalDateTime modifydate; //질문 글 수정 일시
+	
+	//N:N 관계->질문:추천자
+	@ManyToMany
+	Set<SiteUser> voter; //추천한 유저가 중복 없이 여러 명의 유저가 저장->유저의 수->추천 수
+	//Set->중복 제거용 컬렉션 사용->유저 한명 당 추천수 1개만 기록하기 위해
 	
 
 }

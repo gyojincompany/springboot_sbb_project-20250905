@@ -1,6 +1,7 @@
 package com.gyojincompany.gyojinboard.answer;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import com.gyojincompany.gyojinboard.question.Question;
 import com.gyojincompany.gyojinboard.user.SiteUser;
@@ -10,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -51,5 +53,8 @@ public class Answer {
 	
 	private LocalDateTime modifydate; //답변 글 수정 일시
 	
-
+	//N:N 관계->답변:추천자
+	@ManyToMany
+	Set<SiteUser> voter;
+	
 }
