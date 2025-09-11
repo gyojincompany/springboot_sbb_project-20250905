@@ -55,8 +55,8 @@ public class QuestionService {
 	public Page<Question> getPageQuestions(int page) {
 		int size = 10; //1페이지당 10개씩 글 출력
 		
-		int startRow = page * size;
-		int endRow = startRow + size;
+		int startRow = page * size; //첫 페이지 page=0 -> 0*10 -> 0, 두번째 페이지 page=1 -> 10
+		int endRow = startRow + size; //0+10 -> 10, 두번째 페이지 10 + 10 = 20 
 		
 		List<Question> pageQuestionList = questionRepository.findQuestionsWithPaging(startRow, endRow);
 		
