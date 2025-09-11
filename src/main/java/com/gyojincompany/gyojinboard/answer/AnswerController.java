@@ -50,9 +50,9 @@ public class AnswerController {
 			return "question_detail";
 		}
 		
-		answerService.create(question, answerForm.getContent(), siteUser); //DB에 답변 등록
+		Answer answer = answerService.create(question, answerForm.getContent(), siteUser); //DB에 답변 등록
 		
-		return String.format("redirect:/question/detail/%s", id);
+		return String.format("redirect:/question/detail/%s#answer_%s", id, answer.getId());
 	}
 	
 	@PreAuthorize("isAuthenticated()") //로그인한(인증 받은) 유저만 해당 메서드가 실행되게 함

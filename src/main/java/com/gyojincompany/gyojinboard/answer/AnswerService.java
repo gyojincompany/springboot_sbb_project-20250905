@@ -16,13 +16,15 @@ public class AnswerService {
 	@Autowired
 	private AnswerRepository answerRepository;
 	
-	public void create(Question question, String content, SiteUser author) {
+	public Answer create(Question question, String content, SiteUser author) {
 		Answer answer = new Answer();
 		answer.setContent(content);
 		answer.setCreatedate(LocalDateTime.now()); //현재 시간 등록(답변 등록 시간)
 		answer.setQuestion(question);
 		answer.setAuthor(author);
 		answerRepository.save(answer);
+		
+		return answer; //DB에 등록한 답변을 바로 반환
 	}
 	
 	public Answer getAnswer(Integer id) { //기본키인 답변 id를 인수로 넣어주면 해당 엔티티 반환

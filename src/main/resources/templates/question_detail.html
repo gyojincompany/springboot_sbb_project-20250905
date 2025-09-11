@@ -53,6 +53,7 @@
 		
 		<!-- 질문에 달린 답변들(반복) -->
 		<div class="card my-3" th:each="answer : ${question.answerList}">
+			<a th:id="|answer_${answer.id}|"></a>
 			<div class="card-body">
 				<div class="card-text" style="white-space: pre-line;"
 				th:text="${answer.content}">답변글 내용</div>
@@ -95,7 +96,7 @@
 						th:text="삭제">삭제 버튼 이름 표시</a>
 				</div>	
 			</div>			
-		</div>
+		</div> <!-- 답변 출력 반복 끝! -->
 		
 		<!-- 답변 등록 -->
 		<form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post" class="my-3">
