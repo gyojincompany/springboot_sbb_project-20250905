@@ -1,6 +1,18 @@
 <html layout:decorate="~{layout}">
 	<div layout:fragment="content" class="container my-3">
-	<a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
+	<div class="row my-3">
+		<div class="col-6">
+			<a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
+		</div>
+		<div class="col-6">
+			<div class="input-group">
+				<form th:action="@{/question/list}">
+					<input type="text" name="kw" id="search_kw" class="form-controle" th:value="${kw}">
+					<input class="btn btn-outline-secondary" type="submit" value="찾기" id="btn_search"></button>
+				</form>
+			</div>
+		</div>
+	</div>
 	<table class="table">
 		<thead class="table-dark">
 			<tr class="text-center">
