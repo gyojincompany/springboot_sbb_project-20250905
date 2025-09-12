@@ -4,14 +4,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import com.gyojincompany.gyojinboard.DataNotFoundException;
 import com.gyojincompany.gyojinboard.answer.Answer;
@@ -23,7 +23,6 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import javassist.SerialVersionUID;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
